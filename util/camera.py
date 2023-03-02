@@ -85,6 +85,10 @@ class Camera:
             if max_angle < min_angle:
                 max_angle += 2 * np.pi
 
+            if np.isnan(max_angle) or np.isnan(min_angle):
+                print("err happen, max_angle or min_angle is nan", max_angle, min_angle)
+                continue
+
             K = int(round((max_angle - min_angle) / resolution) + 1) if num is None else num
             angles = np.linspace(min_angle, max_angle, K)
             pts = np.hstack((np.cos(angles)[:, None], np.sin(angles)[:, None], np.zeros((K, 1))))
