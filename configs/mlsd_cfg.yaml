@@ -1,0 +1,86 @@
+datasets:
+    name: 'mlsd_line'
+#    input_size: 512
+    src_height: 1080
+    src_width: 1920
+
+    input_w: 960
+    input_h: 544
+
+model:
+    model_name: 'mobilev2_mlsd'
+    num_classes: 21
+    down_scale: 2
+#    with_deconv: True
+#    sub_name: "RepVGG-A2"
+#    pretrain_path: "/mnt/data10/liyj/data/pretrain_model_data/RepVGG-A2-train.pth"
+
+
+train:
+    save_dir:  "/mnt/data10/liyj/programs/ULSD-ISPRS/model/mlsd_20230327"
+    img_dir:  "/mnt/data10/liyj/programs/ULSD-ISPRS/dataset/mlsd_20230327/train/images/"
+    label_fn: "/mnt/data10/liyj/programs/ULSD-ISPRS/dataset/mlsd_20230327/train/jsons/"
+
+#    num_train_epochs: 155
+#    batch_size: 16
+#    milestones: [ 50, 100, 150 ]
+    num_train_epochs: 155  # overfit
+    milestones: [ 50, 100, 150 ]
+    batch_size: 4
+    learning_rate: 0.003
+    use_step_lr_policy: True
+    weight_decay: 0.000001
+    load_from: ""
+    warmup_steps: 100
+
+    milestones_in_epo: True
+    lr_decay_gamma: 0.2
+
+#    data_cache_dir: "/home/tzc/2021/code/MLSD_WITH_CLS_self/data/ourdata_cache/"
+    with_cache: False
+    cache_to_mem: False
+
+    grid_size: 4
+    scale_x: 0.5
+    scale_y: 0.5
+    pad_left: 0
+    pad_right: 0
+    pad_top: 0
+    pad_bottom: 4
+    lane_map_range: [0, -1]        # 室内不进行mask
+#    lane_map_range: [0, 64]      # 选择被mask的部门，主要是室内的时候需要进行mask
+
+val:
+    img_dir:  "/mnt/data10/liyj/programs/ULSD-ISPRS/dataset/mlsd_20230327/test/images/"
+    label_fn: "/mnt/data10/liyj/programs/ULSD-ISPRS/dataset/mlsd_20230327/test/jsons/"
+
+    batch_size: 8
+    val_after_epoch: 50
+
+loss:
+    loss_weight_dict_list: [ { 'tp_center_loss': 1.0,'sol_center_loss': 1.0,'tp_match_loss':1.0 } ]
+
+    with_match_loss: False
+    with_focal_loss: True
+    focal_loss_level: 0
+    with_sol_loss: True
+    match_sap_thresh: 5.0
+
+    # curve paramenters
+    # loss params
+    line_weight: 5.0
+    focal_loss_gamma: 2.0
+    pull_margin: 0.5
+    push_margin: 1.0
+
+    # loss weight
+    confidence_weight: 1.0
+    offset_weight: 1.0
+    emb_weight: 1.5
+    emb_id_weight: 1.0
+    cls_weight: 5.0
+
+decode:
+    score_thresh: 0.3
+    len_thresh: 60
+    top_k: 500
