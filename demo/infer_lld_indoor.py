@@ -10,7 +10,7 @@ from albumentations import Compose, Normalize
 # sys.path.insert(0, "../mlsd_pytorch")
 from network.lld_repvgg_large import Lld_Repvgg_Large
 
-from local_utils import get_ll_cfg, sigmoid, cv2AddChineseText
+from local_utils import get_lld_cfg, sigmoid, cv2AddChineseText
 from local_utils import curve_class_dict, curve_class_chinese_dict, \
                         color_list, line_class_dict
 
@@ -520,13 +520,14 @@ def show_curve_demo():
         shutil.rmtree(save_root)
     os.mkdir(save_root)
 
-    model_path = "/mnt/data10/liyj/programs/ULSD-ISPRS/model/lld_20230320/latest.pth"
+    # model_path = "/mnt/data10/liyj/programs/ULSD-ISPRS/model/lld_20230320/latest.pth"
+    model_path = "/mnt/data10/liyj/programs/ULSD-ISPRS/model/lld_20230404/latest.pth"
 
     img_names = [name for name in os.listdir(root)
                  if name.endswith('.png') or name.endswith('.jpg')]
     # model set
     cfg_path = "/mnt/data10/liyj/programs/ULSD-ISPRS/configs/lld_cfg.yaml"
-    cfg = get_cfg(cfg_path)
+    cfg = get_lld_cfg(cfg_path)
 
     classes = curve_class_dict
     curese_lld_detector = Curve_Detector(cfg, model_path, classes, conf_thre=0.5)
@@ -557,9 +558,9 @@ def show_curve_demo():
 
     line_names = list(CLASSES.keys())
 
-    show_num = 1
+    show_num = 20
     for i_num, img_name in enumerate(img_names):
-        img_name = "0b320388-79d5-4f2d-9b86-a9c9bb1f1a87.jpg"
+        # img_name = "0b320388-79d5-4f2d-9b86-a9c9bb1f1a87.jpg"
 
         img_path = os.path.join(root, img_name)
         img = cv2.imread(img_path)
@@ -594,7 +595,7 @@ def show_curve_demo():
                     pre_point = cur_point
             count += 1
 
-        if 1:
+        if 0:
             plt.subplot(2, 3, 1)
             plt.title("input img")
             plt.imshow(img[:, :, ::-1])
@@ -647,7 +648,7 @@ def show_curve_demo():
 
             vis_img_path = os.path.join(save_root, img_name.split('.')[0] + "_vis.png")
             plt.savefig(vis_img_path)
-            plt.show()
+            # plt.show()
         else:
             # plt.imshow(curese_lld_detector.img_debug[:, :, ::-1])
             # plt.imshow(img_show[:, :, ::-1])

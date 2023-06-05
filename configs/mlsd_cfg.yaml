@@ -1,15 +1,19 @@
 datasets:
     name: 'mlsd_line'
 #    input_size: 512
+    # 数据集加载输入图像的大小
     src_height: 1080
     src_width: 1920
 
+    # 模型输入大小
     input_w: 960
     input_h: 544
 
 model:
     model_name: 'mobilev2_mlsd'
     num_classes: 21
+
+    # 模型的下采样倍数
     down_scale: 2
 #    with_deconv: True
 #    sub_name: "RepVGG-A2"
@@ -17,16 +21,23 @@ model:
 
 
 train:
-    save_dir:  "/mnt/data10/liyj/programs/ULSD-ISPRS/model/mlsd_20230327"
-    img_dir:  "/mnt/data10/liyj/programs/ULSD-ISPRS/dataset/mlsd_20230327/train/images/"
-    label_fn: "/mnt/data10/liyj/programs/ULSD-ISPRS/dataset/mlsd_20230327/train/jsons/"
+    # overfit
+#    save_dir:  "/mnt/data10/liyj/programs/ULSD-ISPRS/model/mlsd_20230404"
+#    img_dir:  "/mnt/data10/liyj/programs/ULSD-ISPRS/dataset/mlsd_20230327/train/images/"
+#    label_fn: "/mnt/data10/liyj/programs/ULSD-ISPRS/dataset/mlsd_20230327/train/jsons/"
 
-#    num_train_epochs: 155
+    # train
+    save_dir:  "/mnt/data10/liyj/programs/ULSD-ISPRS/model/mlsd_all_20230405"
+    img_dir:  "/mnt/data10/liyj/programs/ULSD-ISPRS/dataset/mlsd_20230405/train/images/"
+    label_fn: "/mnt/data10/liyj/programs/ULSD-ISPRS/dataset/mlsd_20230405/train/jsons/"
+
+
+    #    num_train_epochs: 155
 #    batch_size: 16
 #    milestones: [ 50, 100, 150 ]
-    num_train_epochs: 155  # overfit
-    milestones: [ 50, 100, 150 ]
-    batch_size: 4
+    num_train_epochs: 155  # overfit    # default: 155
+    milestones: [50, 100, 150]        # default:  [ 50, 100, 150 ]
+    batch_size: 24
     learning_rate: 0.003
     use_step_lr_policy: True
     weight_decay: 0.000001
@@ -51,8 +62,13 @@ train:
 #    lane_map_range: [0, 64]      # 选择被mask的部门，主要是室内的时候需要进行mask
 
 val:
-    img_dir:  "/mnt/data10/liyj/programs/ULSD-ISPRS/dataset/mlsd_20230327/test/images/"
-    label_fn: "/mnt/data10/liyj/programs/ULSD-ISPRS/dataset/mlsd_20230327/test/jsons/"
+    # overfit
+#    img_dir:  "/mnt/data10/liyj/programs/ULSD-ISPRS/dataset/mlsd_20230327/test/images/"
+#    label_fn: "/mnt/data10/liyj/programs/ULSD-ISPRS/dataset/mlsd_20230327/test/jsons/"
+
+    # train
+    img_dir:  "/mnt/data10/liyj/programs/ULSD-ISPRS/dataset/mlsd_20230405/test/images/"
+    label_fn: "/mnt/data10/liyj/programs/ULSD-ISPRS/dataset/mlsd_20230405/test/jsons/"
 
     batch_size: 8
     val_after_epoch: 50

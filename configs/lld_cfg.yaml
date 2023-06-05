@@ -1,9 +1,11 @@
 datasets:
     name: 'curve_line'
 #    input_size: 512
+    # 加载数据集的输入尺寸
     src_height: 1080
     src_width: 1920
 
+    # 模型的输入尺寸
     input_w: 960
     input_h: 544
 
@@ -16,18 +18,18 @@ model:
 
 
 train:
-    save_dir:  "/mnt/data10/liyj/programs/ULSD-ISPRS/model/lld_20230320"
+    save_dir:  "/mnt/data10/liyj/programs/ULSD-ISPRS/model/lld_20230404"
     img_dir:  "/mnt/data10/liyj/programs/ULSD-ISPRS/dataset/lld_20230316/train/images/"
     label_fn: "/mnt/data10/liyj/programs/ULSD-ISPRS/dataset/lld_20230316/train/jsons/"
 
-    num_train_epochs: 155
-    batch_size: 16
+    num_train_epochs: 600     # defualt: 155
+    batch_size: 2
     learning_rate: 0.003
     use_step_lr_policy: True
     weight_decay: 0.000001
     load_from: ""
     warmup_steps: 100
-    milestones: [ 50, 100, 150 ]
+    milestones: [100, 200, 400, 500]     # default: [ 50, 100, 150 ]
     milestones_in_epo: True
     lr_decay_gamma: 0.2
 

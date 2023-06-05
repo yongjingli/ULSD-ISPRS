@@ -410,7 +410,7 @@ def show_line_demo():
         shutil.rmtree(save_root)
     os.mkdir(save_root)
 
-    model_path = "/mnt/data10/liyj/programs/ULSD-ISPRS/model/mlsd_20230327/latest.pth"
+    model_path = "/mnt/data10/liyj/programs/ULSD-ISPRS/model/mlsd_20230404/latest.pth"
 
     img_names = [name for name in os.listdir(img_root)
                  if name.endswith('.png') or name.endswith('.jpg')]

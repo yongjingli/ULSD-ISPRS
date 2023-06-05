@@ -95,7 +95,7 @@ def get_args():
     return parser.parse_args()
 
 
-def get_ll_cfg(cfg_path):
+def get_lld_cfg(cfg_path):
     cfg = get_lld_cfg_defaults()
     # print(cfg)
     args = get_args()
